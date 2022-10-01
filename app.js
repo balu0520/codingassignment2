@@ -115,7 +115,7 @@ app.get("/user/following/", authenticateToken, async (request, response) => {
   const getUserIdQuery = `SELECT user_id from user WHERE username = '${username}';`;
   const userId = await db.get(getUserIdQuery);
   const realUserId = userId.user_id;
-  const getUserFollowQuery = `SELECT user.username as name 
+  const getUserFollowQuery = `SELECT user.name as name 
   FROM user INNER JOIN follower on user.user_id = follower.following_user_id
   WHERE follower.follower_user_id = ${realUserId};`;
   const getUserFollow = await db.all(getUserFollowQuery);
@@ -128,7 +128,7 @@ app.get("/user/followers/", authenticateToken, async (request, response) => {
   const userId = await db.get(getUserIdQuery);
   console.log(userId);
   const realUserId = userId.user_id;
-  const getUserFollowerQuery = `SELECT user.username as name
+  const getUserFollowerQuery = `SELECT user.name as name
   FROM user INNER JOIN follower on user.user_id = follower.follower_user_id
   WHERE follower.following_user_id = ${realUserId};`;
   const getUserFollower = await db.all(getUserFollowerQuery);
@@ -258,7 +258,7 @@ app.get(
   }
 );
 
-app.get("/users/tweets/", authenticateToken, async (request, response) => {
+app.get("/user/tweets/", authenticateToken, async (request, response) => {
   const username = request.username;
   const getUserIdQuery = `select user_id from user where username = '${username}';`;
   const getuserId = await db.get(getUserIdQuery);
